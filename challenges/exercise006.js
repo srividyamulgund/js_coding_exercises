@@ -120,10 +120,10 @@ const areWeCovered = (staff, day) => {
   let available = false;
   if (staff.length === 0) return false;
   staff.forEach(element => {
-    if(element.rota.includes(day) && count <= 3) {
+    if (element.rota.includes(day) && count <= 3) {
       count++;
     }
-    if(count === 3){
+    if (count === 3) {
       available = true;
     }
   });
