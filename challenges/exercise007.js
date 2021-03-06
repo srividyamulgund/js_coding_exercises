@@ -117,8 +117,63 @@ const hexToRGB = hexStr => {
  */
 const findWinner = board => {
   if (board === undefined) throw new Error("board is required");
+  //CHECK ROW (0) (1) (2)
 
-};
+  let res;
+
+  //Checking rows...
+  for (let i = 0; i < board.length; i++) {
+    let arr = [];
+    for (let j = 0; j < board.length; j++) {
+      arr[j] = board[i][j];
+    }
+    res = checkWin(arr);
+    if (res) {
+      return res;
+    }
+  }
+
+  //Checking columns...
+  for (let i = 0; i < board.length; i++) {
+    let arr = [];
+    for (let j = 0; j < board.length; j++) {
+      arr[j] = board[j][i];
+    }
+    res = checkWin(arr);
+    if (res) {
+      return res;
+    }
+  }
+
+  let arr = [];
+  //Checking primary diagonal..
+  for (let i = 0; i < board.length; i++) {
+    arr[i] = board[i][i];
+  }
+  res = checkWin(arr);
+  if (res) {
+    return res;
+  }
+
+  //Checking secondary diagonal..
+  let arr2 = [];
+  for (let i = 0, j = board.length-1; i < board.length; i++, j--) {
+    arr2[i] = board[i][j];
+  }
+  res = checkWin(arr2);
+  if (res) {
+    return res;
+  }
+
+  return null;
+}
+
+let checkWin = (arr => {
+  if (arr.every(v => v === arr[0])) {
+    return arr[0];
+  }
+  return null;
+});
 
 module.exports = {
   sumDigits,

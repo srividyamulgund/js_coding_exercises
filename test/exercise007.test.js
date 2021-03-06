@@ -1,7 +1,8 @@
 const {
     sumDigits,
     createRange,
-    hexToRGB
+    hexToRGB,
+    findWinner
 } = require("../challenges/exercise007");
 
 describe("sumDigits", () => {
@@ -32,5 +33,63 @@ describe("hexToRGB", () => {
     test("it returns null when incorrect hex value is provided", () => {
         expect(hexToRGB("527238")).toBe("null");
         expect(hexToRGB("527r38")).toBe("null");
+    });
+});
+
+describe("findWinner", () => {
+    test("it returns X if player X  has won", () => {
+        const arrCase1 = [["X", "0", null],
+        ["X", null, "0"],
+        ["X", null, "0"]];
+        expect(findWinner(arrCase1)).toBe("X");
+        const arrCase2 = [["X", "X", "X"],
+        ["O", null, "0"],
+        ["X", null, "0"]];
+        expect(findWinner(arrCase2)).toBe("X");
+        const arrCase3 = [["X", "O", "X"],
+        ["O", "X", "0"],
+        ["X", null, "X"]];
+        expect(findWinner(arrCase3)).toBe("X");
+        const arrCase4 = [["O", "O", "X"],
+        ["O", "X", "0"],
+        ["X", null, "0"]];
+        expect(findWinner(arrCase4)).toBe("X");
+
+    });
+    test("it returns O if player O  has won", () => {
+        const arrCase1 = [["O", "X", null],
+        ["O", null, "X"],
+        ["O", null, "X"]];
+        expect(findWinner(arrCase1)).toBe("O");
+        const arrCase2 = [["O", "O", "O"],
+        ["X", null, "X"],
+        ["O", null, "X"]];
+        expect(findWinner(arrCase2)).toBe("O");
+        const arrCase3 = [["O", "X", "O"],
+        ["X", "O", "X"],
+        ["O", null, "O"]];
+        expect(findWinner(arrCase3)).toBe("O");
+        const arrCase4 = [["X", "X", "O"],
+                          ["X", "O", "X"],
+                          ["O", null, "X"]];
+        expect(findWinner(arrCase4)).toBe("O");
+    });
+    test("it returns null if it is a draw", () => {
+        const arrCase1 = [[null, "X", null],
+        [null, null, "X"],
+        [null, null, "X"]];
+        expect(findWinner(arrCase1)).toBe(null);
+        const arrCase2 = [[null, null, null],
+        ["X", null, "X"],
+        ["O", null, "X"]];
+        expect(findWinner(arrCase2)).toBe(null);
+        const arrCase3 = [[null, "X", "O"],
+        ["X", null, "X"],
+        ["O", null, null]];
+        expect(findWinner(arrCase3)).toBe(null);
+        const arrCase4 = [["X", "X", null],
+                          ["X", null, "X"],
+                          [null, null, "X"]];
+        expect(findWinner(arrCase4)).toBe(null);
     });
 });
