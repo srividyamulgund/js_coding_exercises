@@ -2,7 +2,8 @@ const {
     sumDigits,
     createRange,
     hexToRGB,
-    findWinner
+    findWinner,
+    getScreentimeAlertList
 } = require("../challenges/exercise007");
 
 describe("sumDigits", () => {
@@ -70,8 +71,8 @@ describe("findWinner", () => {
         ["O", null, "O"]];
         expect(findWinner(arrCase3)).toBe("O");
         const arrCase4 = [["X", "X", "O"],
-                          ["X", "O", "X"],
-                          ["O", null, "X"]];
+        ["X", "O", "X"],
+        ["O", null, "X"]];
         expect(findWinner(arrCase4)).toBe("O");
     });
     test("it returns null if it is a draw", () => {
@@ -88,8 +89,47 @@ describe("findWinner", () => {
         ["O", null, null]];
         expect(findWinner(arrCase3)).toBe(null);
         const arrCase4 = [["X", "X", null],
-                          ["X", null, "X"],
-                          [null, null, "X"]];
+        ["X", null, "X"],
+        [null, null, "X"]];
         expect(findWinner(arrCase4)).toBe(null);
+    });
+});
+
+describe("getScreentimeAlertList", () => {
+    test("it returns array of usernames of users for  ", () => {
+        const user = [
+            {
+                username: "beth_1234",
+                name: "Beth Smith",
+                screenTime: [
+                    { date: "2019-05-01", usage: { twitter: 34, instagram: 22, facebook: 40 } },
+                    { date: "2019-05-02", usage: { twitter: 56, instagram: 40, facebook: 31 } },
+                    { date: "2019-05-03", usage: { twitter: 12, instagram: 15, facebook: 19 } },
+                    { date: "2019-05-04", usage: { twitter: 10, instagram: 56, facebook: 61 } },
+                ]
+            },
+            {
+                username: "sam_j_1989",
+                name: "Sam Jones",
+                screenTime: [
+                    { date: "2019-06-11", usage: { mapMyRun: 0, whatsApp: 0, facebook: 0, safari: 10 } },
+                    { date: "2019-06-13", usage: { mapMyRun: 0, whatsApp: 0, facebook: 0, safari: 16 } },
+                    { date: "2019-06-14", usage: { mapMyRun: 0, whatsApp: 0, facebook: 0, safari: 31 } },
+                ]
+            },
+            {
+                username: "jonos_1234",
+                name: "Jono Smith",
+                screenTime: [
+                    { date: "2019-05-01", usage: { twitter: 34, instagram: 22, facebook: 40 } },
+                    { date: "2019-05-02", usage: { twitter: 56, instagram: 40, facebook: 31 } },
+                    { date: "2019-05-03", usage: { twitter: 82, instagram: 15, facebook: 19 } },
+                    { date: "2019-05-04", usage: { twitter: 10, instagram: 56, facebook: 61 } },
+                ]
+            },
+        ]
+        expect(getScreentimeAlertList(user, "2019-05-04")).toEqual(["beth_1234", "jonos_1234"]);
+        expect(getScreentimeAlertList(user, "2019-05-03")).toEqual(["jonos_1234"]);
+        expect(getScreentimeAlertList(user, "2019-06-11")).toEqual(null);
     });
 });

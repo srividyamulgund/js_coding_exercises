@@ -70,6 +70,26 @@ const createRange = (start, end, step) => {
 const getScreentimeAlertList = (users, date) => {
   if (users === undefined) throw new Error("users is required");
   if (date === undefined) throw new Error("date is required");
+  //Get date for each user
+  //for each date  check against the date
+  //if matched then find the sum= of the screentime
+  //return null if no match
+
+  let result = 0;
+  let res = [];
+
+  users.map(v => {
+    v.screenTime.find(user => {
+      if (user.date === date) {
+        let vals = Object.values(user.usage);
+        result = vals.reduce((a, b) => a + b, 0)
+        if (result > 100) {
+          res.push(v.username);
+        }
+      }
+    })
+  });
+  return res.length === 0 ? null : res;
 };
 
 /**
@@ -157,7 +177,7 @@ const findWinner = board => {
 
   //Checking secondary diagonal..
   let arr2 = [];
-  for (let i = 0, j = board.length-1; i < board.length; i++, j--) {
+  for (let i = 0, j = board.length - 1; i < board.length; i++, j--) {
     arr2[i] = board[i][j];
   }
   res = checkWin(arr2);
